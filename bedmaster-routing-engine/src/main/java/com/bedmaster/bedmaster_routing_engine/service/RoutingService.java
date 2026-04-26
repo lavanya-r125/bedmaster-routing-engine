@@ -47,9 +47,9 @@ public class RoutingService {
 
         for (RoutingRule rule : activeRules) {
             try {
-                JsonNode json  = objectMapper.readTree(rule.getExpressionJson());
-                String type    = rule.getRuleType();
-                int priority   = rule.getPriority();
+                JsonNode json = objectMapper.readTree(rule.getExpressionJson());
+                String type   = rule.getRuleType();
+                int priority  = rule.getPriority();
 
                 if (RuleType.DEVICE.equalsIgnoreCase(type)) {
                     String ruleFlag = json.get("flag").asText();
