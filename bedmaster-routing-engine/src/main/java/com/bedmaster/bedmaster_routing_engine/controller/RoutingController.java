@@ -17,11 +17,13 @@ public class RoutingController {
     @Autowired
     private RoutingService routingService;
 
+    // GET /api/v1/routing/rules
     @GetMapping("/rules")
     public List<RoutingRule> getActiveRules() {
         return routingService.getAllActiveRules();
     }
 
+    // GET /api/v1/routing/check-safety
     @GetMapping("/check-safety")
     public BedMatchResponse checkSafety(
             @RequestParam Long bedId,
@@ -42,8 +44,18 @@ public class RoutingController {
                 roomPolicy, speciality, bedUnit);
     }
 
+    // POST /api/v1/routing/find-safe-beds
+    // used for manual testing — accepts full JSON body
     @PostMapping("/find-safe-beds")
     public Map<String, Object> findSafeBeds(@RequestBody RoutingRequestDTO request) {
         return routingService.findSafeBeds(request);
+    }
+
+    // POST /api/v1/routing/route-patient/{admissionRequestId}
+    // integration endpoint — calls Laaranie + Hari automatically
+    // TODO — test after confirming URLs with teammates
+    @PostMapping("/route-patient/{admissionRequestId}")
+    public Map<String, Object> routePatient(@PathVariable Long admissionRequestId) {
+        return routingService.routePatient(admissionRequestId);
     }
 }
