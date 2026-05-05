@@ -1,4 +1,4 @@
-package com.bedmaster.bedmaster_routing_engine.dto;
+package com.bedmaster.module.module_5.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

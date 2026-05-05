@@ -1,7 +1,7 @@
-package com.bedmaster.bedmaster_routing_engine.service;
+package com.bedmaster.module.module_5.service;
 
-import com.bedmaster.bedmaster_routing_engine.dto.BedCandidateDTO;
-import com.bedmaster.bedmaster_routing_engine.dto.BedMatchResponse;
+import com.bedmaster.module.module_5.dto.BedCandidateDTO;
+import com.bedmaster.module.module_5.dto.BedMatchResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.*;

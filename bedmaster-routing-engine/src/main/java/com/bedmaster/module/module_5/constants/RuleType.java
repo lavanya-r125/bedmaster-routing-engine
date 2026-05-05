@@ -1,4 +1,4 @@
-package com.bedmaster.bedmaster_routing_engine.constants;
+package com.bedmaster.module.module_5.constants;
 
 public class RuleType {
 

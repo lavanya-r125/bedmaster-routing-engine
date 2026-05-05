@@ -1,10 +1,10 @@
-package com.bedmaster.bedmaster_routing_engine.config;
+package com.bedmaster.module.module_5.config;
 
-import com.bedmaster.bedmaster_routing_engine.constants.RuleType;
-import com.bedmaster.bedmaster_routing_engine.entities.CohortGroup;
-import com.bedmaster.bedmaster_routing_engine.entities.RoutingRule;
-import com.bedmaster.bedmaster_routing_engine.repository.CohortGroupRepository;
-import com.bedmaster.bedmaster_routing_engine.repository.RoutingRuleRepository;
+import com.bedmaster.module.module_5.constants.RuleType;
+import com.bedmaster.module.module_5.entities.CohortGroup;
+import com.bedmaster.module.module_5.entities.RoutingRule;
+import com.bedmaster.module.module_5.repository.CohortGroupRepository;
+import com.bedmaster.module.module_5.repository.RoutingRuleRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

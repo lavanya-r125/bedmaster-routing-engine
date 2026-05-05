@@ -1,17 +1,12 @@
-package com.bedmaster.bedmaster_routing_engine.service;
+package com.bedmaster.module.module_5.service;
 
-import com.bedmaster.bedmaster_routing_engine.constants.RuleType;
-import com.bedmaster.bedmaster_routing_engine.dto.BedCandidateDTO;
-import com.bedmaster.bedmaster_routing_engine.dto.BedMatchResponse;
-import com.bedmaster.bedmaster_routing_engine.dto.RoutingRequestDTO;
-import com.bedmaster.bedmaster_routing_engine.entities.RoutingRule;
-import com.bedmaster.bedmaster_routing_engine.repository.RoutingRuleRepository;
+import com.bedmaster.module.module_5.constants.RuleType;
+import com.bedmaster.module.module_5.dto.BedMatchResponse;
+import com.bedmaster.module.module_5.dto.RoutingRequestDTO;
+import com.bedmaster.module.module_5.entities.RoutingRule;
+import com.bedmaster.module.module_5.repository.RoutingRuleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
 
@@ -29,73 +24,8 @@ public class RoutingService {
     @Autowired
     private CohortService cohortService;
 
-    @Autowired
-    private RestTemplate restTemplate;
-
-    // TODO — update these with actual URLs after confirming with teammates
-    private static final String ADMISSION_SERVICE_URL     = "http://localhost:5000/admission/";
-    private static final String BED_INVENTORY_SERVICE_URL = "http://localhost:8083/api/v1/beds/available";
-
     public List<RoutingRule> getAllActiveRules() {
         return routingRuleRepository.findByStatusOrderByPriorityDesc(RuleType.STATUS_ACTIVE);
-    }
-
-    // integration entry point
-    // Step 1 — calls Laaranie's API to get patient details
-    // Step 2 — calls Hari's API to get available beds
-    // Step 3 — combines both and runs routing logic
-    // Step 4 — returns safe beds to Bed Assignment module
-    public Map<String, Object> routePatient(Long admissionRequestId) {
-
-        // Step 1 — get patient details from Laaranie's admission module
-        RoutingRequestDTO patientDetails;
-        try {
-            patientDetails = restTemplate.getForObject(
-                    ADMISSION_SERVICE_URL + admissionRequestId + "/routing-payload",
-                    RoutingRequestDTO.class);
-
-            if (patientDetails == null) {
-                Map<String, Object> error = new LinkedHashMap<>();
-                error.put("status", "ERROR");
-                error.put("message", "No patient data received from Admission Service for ID: " + admissionRequestId);
-                return error;
-            }
-        } catch (Exception e) {
-            Map<String, Object> error = new LinkedHashMap<>();
-            error.put("status", "ERROR");
-            error.put("message", "Could not reach Admission Service: " + e.getMessage());
-            return error;
-        }
-
-        // Step 2 — get available beds from Hari's bed inventory module
-        List<BedCandidateDTO> availableBeds;
-        try {
-            ResponseEntity<List<BedCandidateDTO>> response = restTemplate.exchange(
-                    BED_INVENTORY_SERVICE_URL,
-                    HttpMethod.GET,
-                    null,
-                    new ParameterizedTypeReference<List<BedCandidateDTO>>() {}
-            );
-            availableBeds = response.getBody();
-
-            if (availableBeds == null || availableBeds.isEmpty()) {
-                Map<String, Object> error = new LinkedHashMap<>();
-                error.put("status", "ERROR");
-                error.put("message", "No available beds received from Bed Inventory Service");
-                return error;
-            }
-        } catch (Exception e) {
-            Map<String, Object> error = new LinkedHashMap<>();
-            error.put("status", "ERROR");
-            error.put("message", "Could not reach Bed Inventory Service: " + e.getMessage());
-            return error;
-        }
-
-        // Step 3 — combine patient details + available beds into one request
-        patientDetails.setAvailableBeds(availableBeds);
-
-        // Step 4 — run routing logic and return result
-        return findSafeBeds(patientDetails);
     }
 
     public BedMatchResponse validateBedAssignment(

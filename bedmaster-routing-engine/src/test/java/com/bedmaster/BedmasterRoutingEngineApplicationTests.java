@@ -1,4 +1,4 @@
-package com.bedmaster.bedmaster_routing_engine;
+package com.bedmaster;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

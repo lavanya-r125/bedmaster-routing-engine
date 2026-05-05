@@ -1,6 +1,6 @@
-package com.bedmaster.bedmaster_routing_engine.repository;
+package com.bedmaster.module.module_5.repository;
 
-import com.bedmaster.bedmaster_routing_engine.entities.RoutingRule;
+import com.bedmaster.module.module_5.entities.RoutingRule;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.List;

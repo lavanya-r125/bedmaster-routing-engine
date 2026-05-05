@@ -1,6 +1,6 @@
-package com.bedmaster.bedmaster_routing_engine.repository;
+package com.bedmaster.module.module_5.repository;
 
-import com.bedmaster.bedmaster_routing_engine.entities.CohortGroup;
+import com.bedmaster.module.module_5.entities.CohortGroup;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

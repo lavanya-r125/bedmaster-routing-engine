@@ -1,4 +1,4 @@
-package com.bedmaster.bedmaster_routing_engine.entities;
+package com.bedmaster.module.module_5.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;

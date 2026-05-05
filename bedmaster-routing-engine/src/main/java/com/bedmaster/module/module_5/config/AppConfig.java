@@ -1,4 +1,4 @@
-package com.bedmaster.bedmaster_routing_engine.config;
+package com.bedmaster.module.module_5.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
